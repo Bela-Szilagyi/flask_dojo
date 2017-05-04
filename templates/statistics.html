@@ -5,10 +5,16 @@
     </head>
     <body>
         <h1> Statistics </h1>
-        {% for key, value in counts.items() %}
-            <h1>Key: {{key}}</h1>
-            <h2>Value: {{value}}</h2>
-        {% endfor %}
+        <table border="1">
+            <th>Mehod</th><th>Count</th>
+            {% for key, value in counts.items() %}
+                <tr>
+                    <td> {{key}} </td>
+                    <td> {{value}} </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
         <form action="/">
             <input type="submit" value="Back to main page">
         </form>
