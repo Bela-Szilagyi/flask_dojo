@@ -12,7 +12,8 @@ counts = {
 
 @app.route("/")
 def index():
-    print(counts)
+    global counts
+    counts = read_from_file('request_counts.txt')
     return render_template("index.html")
 
 
@@ -24,14 +25,32 @@ def statistic():
 
 @app.route("/request-counter", methods=["GET"])
 def get_counter():
-    counts["GET"] += 1
+    global counts
+    counts["GET"] = int(counts["GET"]) + 1
     write_to_file(counts, 'request_counts.txt')
     return redirect("/")
 
 
 @app.route("/request-counter", methods=["POST"])
 def post_counter():
-    counts["POST"] += 1
+    global counts
+    counts["POST"] = int(counts["POST"]) + 1
+    write_to_file(counts, 'request_counts.txt')
+    return redirect("/")
+
+
+@app.route("/request-counter", methods=["DELETE"])
+def delete_counter():
+    global counts
+    counts["DELETE"] = int(counts["DELETE"]) + 1
+    write_to_file(counts, 'request_counts.txt')
+    return redirect("/")
+
+
+@app.route("/request-counter", methods=["PUT"])
+def put_counter():
+    global counts
+    counts["PUT"] = int(counts["PUT"]) + 1
     write_to_file(counts, 'request_counts.txt')
     return redirect("/")
 
