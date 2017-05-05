@@ -2,17 +2,9 @@ from flask import Flask, render_template, redirect
 
 app = Flask(__name__)
 
-counts = {
-    "GET": 0,
-    "POST": 0,
-    "DELETE": 0,
-    "PUT": 0
-}
-
 
 @app.route("/")
 def index():
-    global counts
     counts = read_from_file('request_counts.txt')
     return render_template("index.html")
 
@@ -25,7 +17,7 @@ def statistic():
 
 @app.route("/request-counter", methods=["GET"])
 def get_counter():
-    global counts
+    counts = read_from_file('request_counts.txt')
     counts["GET"] = int(counts["GET"]) + 1
     write_to_file(counts, 'request_counts.txt')
     return redirect("/")
@@ -33,7 +25,7 @@ def get_counter():
 
 @app.route("/request-counter", methods=["POST"])
 def post_counter():
-    global counts
+    counts = read_from_file('request_counts.txt')
     counts["POST"] = int(counts["POST"]) + 1
     write_to_file(counts, 'request_counts.txt')
     return redirect("/")
@@ -41,7 +33,7 @@ def post_counter():
 
 @app.route("/request-counter", methods=["DELETE"])
 def delete_counter():
-    global counts
+    counts = read_from_file('request_counts.txt')
     counts["DELETE"] = int(counts["DELETE"]) + 1
     write_to_file(counts, 'request_counts.txt')
     return redirect("/")
@@ -49,7 +41,7 @@ def delete_counter():
 
 @app.route("/request-counter", methods=["PUT"])
 def put_counter():
-    global counts
+    counts = read_from_file('request_counts.txt')
     counts["PUT"] = int(counts["PUT"]) + 1
     write_to_file(counts, 'request_counts.txt')
     return redirect("/")
